@@ -43,6 +43,28 @@ def today_anno(data):
     elif today["date_real"].iloc[0].weekday() in [4,5]:
         return today, f'{int(today["vaxes"].iloc[0]):,}' + " vaccinations\n(excl Scotland and Wales)"
 
+def y_fmt(tick_val,pos):
+    """ Function to format y axis ticks as e.g. 100,000 = 100k
+         
+         Args:
+            tick_val: Tick value
+            pos: position of tick
+
+         Returns:
+            String for tick value
+    """
+    
+    if tick_val > 1000000:
+        val = int(tick_val/1000000)
+        return '{:d}M'.format(val)
+    
+    elif tick_val > 1000:
+        val = int(tick_val/1000)
+        return '{:d}k'.format(val) 
+    
+    else: 
+        return int(tick_val)
+
 
 if __name__ == "__main__":
     #Import data from API and put it in a pandas dataframe
@@ -84,7 +106,7 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(1,1,figsize=[20,11.25],facecolor="white")
     ax.set_facecolor("white")
 
-	ax.plot(date_list, target_2m,label='_nolegend_')
+    ax.plot(date_list, target_2m,label='_nolegend_')
     ax.text(datetime.datetime(2021, 2 , 3,0,0,0)+datetime.timedelta(days = 0.5),target_2mpd-18000,"2million/week", fontdict={'size':20, 'color':'darkgrey'})
 
     ax.plot(date_list, target_3m,label='_nolegend_')
@@ -104,8 +126,11 @@ if __name__ == "__main__":
     ax.set_xticks(date_list)
 
     ax.set_ylim([0,600000])
+    ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
 
-    ax.tick_params(labelsize=13)
+    ax.tick_params(axis='y',labelsize=15)
+    ax.tick_params(axis='x',labelsize=13)
+
 
     ax.legend(["7 day average"],loc='lower right',fontsize=20,frameon=False)
 
