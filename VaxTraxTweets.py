@@ -107,20 +107,20 @@ if __name__ == "__main__":
     fig, ax = plt.subplots(1,1,figsize=[20,11.25],facecolor="white")
     ax.set_facecolor("white")
 
-    ax.plot(date_list, target_2m,label='_nolegend_')
+    ax.plot(date_list, target_2m,label='_nolegend_',lw=3)
     ax.text(datetime.datetime(2021, 2 , 3,0,0,0)+datetime.timedelta(days = 0.5),target_2mpd-18000,"2million/week", fontdict={'size':20, 'color':'darkgrey'})
 
-    ax.plot(date_list, target_3m,label='_nolegend_')
+    ax.plot(date_list, target_3m,label='_nolegend_',lw=3)
     ax.text(datetime.datetime(2021, 2 , 3,0,0,0)+datetime.timedelta(days = 0.5),target_3mpd-18000,"3million/week", fontdict={'size':20, 'color':'darkgrey'})
 
-    ax.plot(date_list, target_4m, c='purple',label='_nolegend_')
+    ax.plot(date_list, target_4m, c='purple',label='_nolegend_',lw=3)
     ax.text(datetime.datetime(2021, 2 , 3,0,0,0)+datetime.timedelta(days = 0.5),target_4mpd-18000,"4million/week", fontdict={'size':20, 'color':'darkgrey'})
 
-    ax.plot(by_date["date_real"],by_date["vaxes"],c="r", lw=3,label='_nolegend_')
-    ax.plot(today["date_real"],today["vaxes"],"ro", ms=10,label='_nolegend_')
+    ax.plot(by_date["date_real"],by_date["vaxes"],c="r", lw=5,label='_nolegend_')
+    ax.plot(today["date_real"],today["vaxes"],"ro", ms=12,label='_nolegend_')
     ax.text(today["date_real"]+datetime.timedelta(days = 0.3),today["vaxes"],vaxes_today, fontdict={'size':20})
 
-    ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=3, marker='X',ms=8)
+    ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=5, marker='X',ms=12)
 
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m'))
     ax.set_xlim(start_date, end_date)
