@@ -132,13 +132,12 @@ if __name__ == "__main__":
     ax.tick_params(axis='y',labelsize=15)
     ax.tick_params(axis='x',labelsize=13)
 
-
     ax.legend(["7 day average"],loc='lower right',fontsize=20,frameon=False)
 
     plt.title("Roddy's COVID19 vaccine tracker",
             fontsize=30, color='g' )
     plt.xlabel('Date',fontsize=20)
-    plt.ylabel('Daily vaccine doses given',fontsize=25)
+    plt.ylabel('Reported daily vaccine doses',fontsize=25)
 
     sns.despine(top=True, right=True)
 
