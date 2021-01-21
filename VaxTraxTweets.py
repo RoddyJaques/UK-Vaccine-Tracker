@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.ticker as tick
 import seaborn as sns
 import datetime
 import tweepy_auth #this module just contains the part of the tweetpy code with my private access codes, copy and pasted from the tweepy docs on creating an API 
