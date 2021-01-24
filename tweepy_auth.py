@@ -4,10 +4,10 @@ import os
 
 def twitter_api():
     twitter_auth_keys = { 
-        "consumer_key"        : "bOdgOZG0DDgwcIPlToEVtkPVn",
-        "consumer_secret"     : "4xThryNVL2TiKv8xEYgfUXtXZelNTrhCQ493lsTOoWBjdrOvJU",
-        "access_token"        : "1350801847150374912-oYSYCqjFX2IsGyDawqUWNdPqVnSFHx",
-        "access_token_secret" : "vdM5m8cjLjkKreSs3f7F2zYB2FKDRmW70RQRBf4kwUACH"
+        "consumer_key"        : "XXXXXXXXXXXXXXXXX",
+        "consumer_secret"     : "XXXXXXXXXXXXXXXXX",
+        "access_token"        : "XXXXXXXXXXXXXXXXX",
+        "access_token_secret" : "XXXXXXXXXXXXXXXXX"
     }
  
     auth = tweepy.OAuthHandler(

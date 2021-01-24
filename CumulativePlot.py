@@ -105,6 +105,7 @@ if today_total > 16800000:
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m"))
 ax.set_xlim(start_date, end_date)
 ax.set_xticks(date_list)
+ax.set_xticklabels(x_labels)
 
 ax.set_ylim([0,y_limit])
 ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))

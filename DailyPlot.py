@@ -42,6 +42,7 @@ end_date = datetime.date(2021, 2 , 7)
 end_datetime = datetime.datetime(2021, 2 , 7,0,0,0) #Keep a datetime of the end date so annoations can be plotted precisely 
 number_of_days = 28
 date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
+x_labels = np.asarray([(start_date + datetime.timedelta(days = day)).strftime('%d/%m') for day in range(number_of_days)])
 
 
 #Number of vaccinations per day needed for 2m/weeek, 3m/week and 4m/week
@@ -76,6 +77,7 @@ ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=5, marker="X
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m"))
 ax.set_xlim(start_date, end_date)
 ax.set_xticks(date_list)
+ax.set_xticklabels(x_labels)
 
 ax.set_ylim([0,600000])
 ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))

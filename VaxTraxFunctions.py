@@ -26,7 +26,7 @@ def y_fmt(tick_val,pos):
 
          Returns:
             String for tick value
-    """
+    """ 
     
     if tick_val > 1000000:
         val = int(tick_val/1000000)
