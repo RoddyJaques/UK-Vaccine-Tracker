@@ -24,7 +24,6 @@ by_date["vaxes"] = by_date["newPeopleVaccinatedFirstDoseByPublishDate"] + by_dat
 
 #calculate 7 day rolling average
 by_date["7day_avg"] = by_date["vaxes"].rolling(7).mean()
-by_date["7day_index"] = by_date.index - 1
 
 #calculate number over past 7 days
 past_7days = by_date["vaxes"].iloc[-7:].sum()
@@ -32,9 +31,10 @@ past_7days = by_date["vaxes"].iloc[-7:].sum()
 #Get latest day only
 today = by_date[by_date["date_real"]==by_date["date_real"].max()]
 
-#Information for the tweet
+#Information for the tweet text
 today_n = int(today["vaxes"].iloc[0])
 vax_per_min = int(today_n/1440)
+wkavg_n = int(today["7day_avg"].iloc[0])
 
 #Create numpy array of all dates from 11/01/21 to 07/02/21
 start_date = datetime.date(2021, 1 , 11)
