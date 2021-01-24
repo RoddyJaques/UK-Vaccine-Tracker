@@ -21,7 +21,6 @@ if __name__ == "__main__":
     cum_tweet = ("Today's total reported vaccinations." 
             +"\n\n\U0001F489 " + f'{today_total:,}' + " people have recieved at least a first dose of a COVID-19 vaccine in the UK." 
             + "\n\n\U0001F489 " + f'{past_7days:,}' + " people have been vaccinated in the past 7 days." 
-           + "\n\n\U0001F489 " + str(pop_pct) + "%" + " of the adults in the UK have now recieved at least one dose.")
-    print(cum_tweet)       
+           + "\n\n\U0001F489 " + str(pop_pct) + "%" + " of adults in the UK have now recieved at least one dose.")    
     media2 = api.media_upload(cum_file_name+".png")
     post_result = api.update_status(status=cum_tweet, media_ids=[media2.media_id])
