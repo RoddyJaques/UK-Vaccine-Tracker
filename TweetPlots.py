@@ -10,7 +10,7 @@ if __name__ == "__main__":
     # Tweet daily plot
     daily_file_name = "DailyPlot_" + datetime.datetime.today().strftime("%d%m%y")
     media1 = api.media_upload(daily_file_name+".png")      
-    daily_tweet = ("Today's reported COVID-19 vaccinations. \n\n" 
+    daily_tweet = ("Today's reported #COVID19 #vaccinations. \n\n" 
                 + "\U0001F489 " + f'{today_n:,}' + " jabs recorded today!" 
                 + "\n\n\U0001F489 That's " + str(vax_per_min) + " jabs per minute!" 
                 + "\n\nStay positive everyone, we're getting there!" ) 
@@ -20,8 +20,8 @@ if __name__ == "__main__":
     cum_file_name = "TotalPlot_" + datetime.datetime.today().strftime("%d%m%y")
     #Get tweet text
     cum_tweet = ("Today's total reported vaccinations." 
-            +"\n\n\U0001F489 " + f'{today_total:,}' + " people have recieved at least a first dose of a COVID-19 vaccine in the UK." 
-            + "\n\n\U0001F489 " + f'{past_7days:,}' + " people have been vaccinated in the past 7 days." 
+            +"\n\n\U0001F489 " + f'{today_total:,}' + " people have recieved at least a first dose of a #COVID19 #vaccine in the UK." 
+            + "\n\n\U0001F489 " + f'{past_7days:,}' + " people have been #vaccinated in the past 7 days." 
            + "\n\n\U0001F489 " + str(pop_pct) + "%" + " of adults in the UK have now recieved at least one dose.")    
     media2 = api.media_upload(cum_file_name+".png")
     cum_plot_tweet = api.update_status(status=cum_tweet, media_ids=[media2.media_id])
@@ -38,12 +38,14 @@ if __name__ == "__main__":
 
 
     #Tweet text
-    proj_text = ("If we keep up today's rate, we'll have given a first dose to..." 
-                + "\n\n\U0001F489 Top 4 Priority Groups: by " + daily_15m
-                + "\n\n\U0001F489 All Vulnerable groups: by " + daily_o50)   
+    proj_text = ("If we keep up today's rate, we'll have given a first #COVID19 #vaccine dose to..." 
+                + "\n\n\U0001F489 Top 4 Priority Groups by " + daily_15m
+                + "\n\n\U0001F489 All Vulnerable groups by " + daily_o50
+                + "\n\nThese are very rough guesses, don't take them too seriously")   
     proj_tweet1 = api.update_status(status=proj_text)
 
-    proj_text2 = ("If we keep up this week's rate, we'll have given a first dose to..." 
-                + "\n\n\U0001F489 Top 4 Priority Groups: by " + wkavg_15m
-                + "\n\n\U0001F489 All Vulnerable groups: by " + wkavg_o50)  
+    proj_text2 = ("If we keep up the 7 day average rate, we'll have given a first #COVID19 #vaccine dose to..." 
+                + "\n\n\U0001F489 Top 4 Priority Groups by " + wkavg_15m
+                + "\n\n\U0001F489 All Vulnerable groups by " + wkavg_o50
+                + "\n\nThese are very rough guesses, don't take them too seriously")  
     proj_tweet2 = api.update_status(status=proj_text2, in_reply_to_status_id=proj_tweet1.id_str)
