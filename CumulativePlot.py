@@ -26,8 +26,8 @@ by_date["TotalDoses"] = by_date["cumPeopleVaccinatedFirstDoseByPublishDate"] + b
 
 #Create numpy array of all dates from 11/01/21 to 07/02/21
 start_date = datetime.date(2021, 1 , 10)
-end_date = datetime.date(2021, 2 , 7)
 end_datetime = datetime.datetime(2021, 2 , 7,0,0,0) #Keep a datetime of the end date so annoations can be plotted precisely 
+end_date = end_datetime.date()
 number_of_days = 29
 date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
 x_labels = np.asarray([(start_date + datetime.timedelta(days = day)).strftime("%d/%m") for day in range(number_of_days)])

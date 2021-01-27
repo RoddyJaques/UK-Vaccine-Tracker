@@ -25,27 +25,3 @@ if __name__ == "__main__":
            + "\n\n\U0001F489 " + str(pop_pct) + "%" + " of adults in the UK have now recieved at least one dose.")    
     media2 = api.media_upload(cum_file_name+".png")
     cum_plot_tweet = api.update_status(status=cum_tweet, media_ids=[media2.media_id])
-
-    #Tweet projected vaccination timelines
-    #Numbers for projected timelines tweet
-    daily_15m = project_tl(today_n,15000000,today_total)
-    daily_o50 = project_tl(today_n,32000000,today_total)
-    #daily_all = project_tl(today_n,53000000,today_total)
-
-    wkavg_15m = project_tl(wkavg_n,15000000,today_total)
-    wkavg_o50 = project_tl(wkavg_n,32000000,today_total)
-    #wkavg_all = project_tl(wkavg_n,53000000,today_total)
-
-
-    #Tweet text
-    proj_text = ("If we keep up today's rate, we'll have given a first #COVID19 #vaccine dose to..." 
-                + "\n\n\U0001F489 Top 4 Priority Groups by " + daily_15m
-                + "\n\n\U0001F489 All Vulnerable groups by " + daily_o50
-                + "\n\nThese are very rough guesses, don't take them too seriously")   
-    proj_tweet1 = api.update_status(status=proj_text)
-
-    proj_text2 = ("If we keep up the 7 day average rate, we'll have given a first #COVID19 #vaccine dose to..." 
-                + "\n\n\U0001F489 Top 4 Priority Groups by " + wkavg_15m
-                + "\n\n\U0001F489 All Vulnerable groups by " + wkavg_o50
-                + "\n\nThese are very rough guesses, don't take them too seriously")  
-    proj_tweet2 = api.update_status(status=proj_text2, in_reply_to_status_id=proj_tweet1.id_str)

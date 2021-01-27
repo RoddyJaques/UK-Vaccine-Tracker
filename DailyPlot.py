@@ -38,8 +38,8 @@ wkavg_n = int(today["7day_avg"].iloc[0])
 
 #Create numpy array of all dates from 11/01/21 to 07/02/21
 start_date = datetime.date(2021, 1 , 11)
-end_date = datetime.date(2021, 2 , 7)
 end_datetime = datetime.datetime(2021, 2 , 7,0,0,0) #Keep a datetime of the end date so annoations can be plotted precisely 
+end_date = end_datetime.date()
 number_of_days = 28
 date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
 x_labels = np.asarray([(start_date + datetime.timedelta(days = day)).strftime('%d/%m') for day in range(number_of_days)])
@@ -59,20 +59,22 @@ ax.set_facecolor("white")
 
 reflabel_x = end_datetime-datetime.timedelta(days = 3.5)
 
-ax.plot(date_list, target_2m,label="_nolegend_",lw=3)
-ax.text(reflabel_x,target_2mpd-18000,"2million/week", fontdict={"size":20, "color":"darkgrey"})
+ax.plot(date_list, target_2m,label='_nolegend_',lw=2,c='#75bff6')
+ax.text(end_datetime-datetime.timedelta(days = 5),target_2mpd-26000,"2million/week", fontdict={'size':30, 'color':'dimgrey'})
 
-ax.plot(date_list, target_3m,label="_nolegend_",lw=3)
-ax.text(reflabel_x,target_3mpd-18000,"3million/week", fontdict={"size":20, "color":"darkgrey"})
+ax.plot(date_list, target_3m,label='_nolegend_',lw=2, c='#75bff6')
+ax.text(end_datetime-datetime.timedelta(days = 5),target_3mpd-26000,"3million/week", fontdict={'size':30, 'color':'dimgrey'})
 
-ax.plot(date_list, target_4m, c="purple",label="_nolegend_",lw=3)
-ax.text(reflabel_x,target_4mpd-18000,"4million/week", fontdict={"size":20, "color":"darkgrey"})
+ax.plot(date_list, target_4m ,label='_nolegend_',lw=2, c='#75bff6')
+ax.text(end_datetime-datetime.timedelta(days = 5),target_4mpd-26000,"4million/week", fontdict={'size':30, 'color':'dimgrey'})
 
 ax.plot(by_date["date_real"],by_date["vaxes"],c="r", lw=5,label="_nolegend_")
 ax.plot(today["date_real"],today["vaxes"],"ro", ms=12,label="_nolegend_")
-ax.text(today["date_real"]+datetime.timedelta(days = 0.3),today["vaxes"],f'{int(today["vaxes"].iloc[0]):,}' + " vaccinations", fontdict={"size":23})
+ax.text(today["date_real"]+datetime.timedelta(days = 0.3),today["vaxes"]-20000,f'{int(today["vaxes"].iloc[0]):,}' + "\nvaccinations today", fontdict={"size":23})
 
 ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=5, marker="X",ms=12)
+
+ax.text(start_date,10000," @VaccinationsUK", fontdict={'size':30, 'color':'darkgrey'})
 
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m"))
 ax.set_xlim(start_date, end_date)
@@ -87,8 +89,6 @@ ax.tick_params(axis="x",labelsize=13)
 
 ax.legend(["7 day average"],loc="lower right",fontsize=20,frameon=False)
 
-plt.title("Roddy's COVID-19 vaccine tracker",
-        fontsize=30, color="g" )
 plt.xlabel("Date",fontsize=20)
 plt.ylabel("Reported daily vaccinations",fontsize=25)
 
