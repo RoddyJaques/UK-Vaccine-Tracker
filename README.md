@@ -1,9 +1,11 @@
 # UK-Vaccine-Tracker
 *A python program which plots the daily number of COVID19 vaccinations in the UK and tweets the result.*
 
-CumulativePlot.py - Extracts and plots cumulative vaccination numbers
+GetData.py - Extracts data when it's uploaded to Gov.UK api
 
-DailyPlot.py - Extracts and plots daily vaccination numbers
+CumulativePlot.py - Plots cumulative vaccination numbers
+
+DailyPlot.py - Plots daily vaccination numbers
 
 Projections.py - Estimates when priority groups will be vaccinated by and creates figures with estimates
 
