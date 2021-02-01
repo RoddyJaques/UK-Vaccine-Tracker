@@ -9,11 +9,11 @@ DailyPlot.py - Plots daily vaccination numbers
 
 Projections.py - Estimates when priority groups will be vaccinated by and creates figures with estimates
 
-TweetPlots.py - Tweets figures created by CumulativePlot.py and DailyPlot.py
+TweetPlots.py - Tweets figures created by CumulativePlot.py, DailyPlot.py and Projections.py in a thread
 
-TweetProjections.py - Tweets figures created by Projections.py 
+RetweetThread.py - ReTweets the first tweet of the previously created thread 
 
-VaxTraxFunctions.py - Contains functions used to gather and format data in DailyPlot.py and CumulativePlot.py 
+VaxTraxFunctions.py - Contains functions used to gather and format data
 
 tweepy_auth.py - Python code to create tweepy API, access and consumer keys have been replaced by XXXXX's
 
