@@ -6,42 +6,18 @@ import matplotlib.ticker as tick
 from matplotlib import font_manager as fm, rcParams
 import seaborn as sns
 import datetime
-from VaxTraxFunctions import *
+from VaxTraxFunctions import y_fmt
+from GetData import by_date, date_list, number_of_days, end_datetime, start_date, end_date
 from DailyPlot import past_7days
 
-endpoint = (
-'https://api.coronavirus.data.gov.uk/v1/data?'
-'filters=areaType=overview&'
-'structure={"date":"date","cumPeopleVaccinatedFirstDoseByPublishDate":"cumPeopleVaccinatedFirstDoseByPublishDate","cumPeopleVaccinatedSecondDoseByPublishDate":"cumPeopleVaccinatedSecondDoseByPublishDate"}'
-)
-data = get_data(endpoint)
-df=pd.json_normalize(data,"data")
-
-#Change date from index to datetime variable and sum 1st and 2nd doses for overall doses per day 
-by_date = df.groupby("date").sum().reset_index()
-by_date["date_real"] = pd.to_datetime(by_date["date"]).dt.date
-by_date["FirstDoseOnly"] = by_date["cumPeopleVaccinatedFirstDoseByPublishDate"] - by_date["cumPeopleVaccinatedSecondDoseByPublishDate"]
-by_date["TotalDoses"] = by_date["cumPeopleVaccinatedFirstDoseByPublishDate"] + by_date["cumPeopleVaccinatedSecondDoseByPublishDate"]
-
-#Create numpy array of dates starting from 11/01/21 
-start_date = datetime.date(2021, 1 , 11)
-
-#Extends x-axis by 2 weeks every 2 weeks
-diff = (datetime.date.today() - datetime.date(2021,1,30)).days
-AxisAdd = (diff/14) + 1
-end_date = start_date + datetime.timedelta(days=28 + 14*AxisAdd)
-end_datetime = datetime.datetime.combine(end_date, datetime.datetime.min.time()) #Keep a datetime of the end date so annoations can be plotted precisely 
-number_of_days = (end_date - start_date).days + 1
-date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
+today_total = int(by_date[by_date["date_real"]==by_date["date_real"].max()]["cumPeopleVaccinatedFirstDoseByPublishDate"])
+past_7days = int(by_date["TotalDoses"].iloc[-1] - by_date["TotalDoses"].iloc[-7])
+pop_pct = int(100*today_total/53000000)
 
 # Find out which priority group has been vaccinated
 groups = [[1000000,"Care home residents + their carers"],[6500000,"over 80 + frontline health workers"],
           [8700000,"over 75"],[13400000,"over 70 and extremely vulnerable"],[16800000,"over 65"],
           [20600000,"over 60"],[25000000,"Over 55"],[29700000,"over 50"]]
-
-today_total = int(by_date[by_date["date_real"]==by_date["date_real"].max()]["cumPeopleVaccinatedFirstDoseByPublishDate"])
-past_7days = int(by_date["TotalDoses"].iloc[-1] - by_date["TotalDoses"].iloc[-7])
-pop_pct = int(100*today_total/53000000)
 
 #Set y_limit based on number of vaccinations
 if today_total < 16800000: 

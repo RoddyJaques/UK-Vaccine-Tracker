@@ -5,28 +5,8 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as tick
 import seaborn as sns
 import datetime
-from VaxTraxFunctions import *
-
-
-#Import data from API and put it in a pandas dataframe
-endpoint = (
-'https://api.coronavirus.data.gov.uk/v1/data?'
-'filters=areaType=overview&'
-'structure={"date":"date","newPeopleVaccinatedFirstDoseByPublishDate":"newPeopleVaccinatedFirstDoseByPublishDate","newPeopleVaccinatedSecondDoseByPublishDate":"newPeopleVaccinatedSecondDoseByPublishDate"}'
-)
-data = get_data(endpoint)
-df=pd.json_normalize(data,"data")
-
-#Change date from index to datetime variable and sum 1st and 2nd doses for overall doses per day 
-by_date = df.groupby("date").sum().reset_index()
-by_date["date_real"] = pd.to_datetime(by_date["date"])
-by_date["vaxes"] = by_date["newPeopleVaccinatedFirstDoseByPublishDate"] + by_date["newPeopleVaccinatedSecondDoseByPublishDate"]
-
-#calculate 7 day rolling average
-by_date["7day_avg"] = by_date["vaxes"].rolling(7).mean()
-
-#calculate number over past 7 days
-past_7days = by_date["vaxes"].iloc[-7:].sum()
+from VaxTraxFunctions import y_fmt
+from GetData import by_date, date_list, number_of_days, end_datetime, start_date, end_date
 
 #Get latest day only
 today = by_date[by_date["date_real"]==by_date["date_real"].max()]
@@ -36,17 +16,8 @@ today_n = int(today["vaxes"].iloc[0])
 vax_per_min = int(today_n/1440)
 wkavg_n = int(today["7day_avg"].iloc[0])
 
-#Create numpy array of dates starting from 11/01/21 
-start_date = datetime.date(2021, 1 , 11)
-
-#Extends x-axis by 2 weeks every 2 weeks
-diff = (datetime.date.today() - datetime.date(2021,1,30)).days
-AxisAdd = (diff/14) + 1
-end_date = start_date + datetime.timedelta(days=28 + 14*AxisAdd)
-end_datetime = datetime.datetime.combine(end_date, datetime.datetime.min.time()) #Keep a datetime of the end date so annoations can be plotted precisely 
-number_of_days = (end_date - start_date).days + 1
-date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
-x_labels = np.asarray([(start_date + datetime.timedelta(days = day)).strftime('%d/%m') for day in range(0,number_of_days,2)])
+#calculate number over past 7 days
+past_7days = by_date["vaxes"].iloc[-7:].sum()
 
 #Number of vaccinations per day needed for 2m/weeek, 3m/week and 4m/week
 target_2mpd = float(2000000/7)
@@ -97,7 +68,6 @@ ax.text(start_date,10000," @VaccinationsUK", fontdict={'size':30, 'color':'darkg
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m"))
 ax.set_xlim(start_date, end_date)
 ax.set_xticks(date_list[::2])
-ax.set_xticklabels(x_labels)
 
 ax.set_ylim([0,900000])
 ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
