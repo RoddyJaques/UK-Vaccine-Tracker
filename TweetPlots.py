@@ -2,7 +2,6 @@ import datetime
 import tweepy_auth
 from DailyPlot import today_n, wkavg_n, vax_per_min
 from CumulativePlot import today_total, pop_pct, past_7days
-from Projections import wkavg_15m, wkavg_o50, proj_file
 from VaxTraxFunctions import project_tl
 
 if __name__ == "__main__":
@@ -26,14 +25,6 @@ if __name__ == "__main__":
            + "\n\n\U0001F489 " + str(pop_pct) + "%" + " of adults in the UK have now recieved at least one dose.")    
     media2 = api.media_upload(cum_file_name+".png")
     tweet2 = api.update_status(status=cum_tweet, media_ids=[media2.media_id],in_reply_to_status_id=tweet1.id_str)
-
-    #Projected vaccinations tweet text
-    proj_media = api.media_upload(proj_file+".png")
-    proj_text = ("If we keep up the 7 day average rate, we'll have given a first #COVID19 #vaccine dose to..." 
-                + "\n\n\U0001F489 Top 4 Priority Groups by " + wkavg_15m
-                + "\n\n\U0001F489 All Vulnerable groups by " + wkavg_o50
-                + "\n\nThese are very rough guesses, don't take them too seriously")  
-    tweet3 = api.update_status(status=proj_text, media_ids=[proj_media.media_id],in_reply_to_status_id=tweet2.id_str)
 
     with open("tweet_id.txt","w") as tweet_id:
         tweet_id.write(tweet1.id_str)
