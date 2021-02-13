@@ -7,12 +7,11 @@ from matplotlib import font_manager as fm, rcParams
 import seaborn as sns
 import datetime
 from VaxTraxFunctions import y_fmt
-from GetData import by_date, date_list, number_of_days, end_datetime, start_date, end_date
-from DailyPlot import past_7days
+from GetData import by_date, date_list, number_of_days, end_datetime, start_date, end_date, tick_space
 
 today_total = int(by_date[by_date["date_real"]==by_date["date_real"].max()]["cumPeopleVaccinatedFirstDoseByPublishDate"])
-past_7days = int(by_date["TotalDoses"].iloc[-1] - by_date["TotalDoses"].iloc[-7])
-pop_pct = int(100*today_total/53000000)
+past_7days = int(by_date["TotalDoses"].iloc[-1] - by_date["TotalDoses"].iloc[-8])
+pop_pct = round(100*today_total/53000000)
 
 # Find out which priority group has been vaccinated
 groups = [[1000000,"Care home residents + their carers"],[6500000,"over 80 + frontline health workers"],
@@ -37,7 +36,7 @@ ax.set_facecolor("white")
 ax.stackplot(date_list[date_list <= by_date["date_real"].max() ], 
              by_date[by_date["date_real"]>= start_date]["cumPeopleVaccinatedSecondDoseByPublishDate"], 
              by_date[by_date["date_real"]>= start_date]["FirstDoseOnly"], 
-            labels=["Fully vaccinated","First dose only"], colors= ["green","orangered"])
+            labels=["Fully vaccinated","First dose only"], colors= ["#005EB8","#60aef7"])
 
 width = 1
 
@@ -83,7 +82,7 @@ if today_total > 16800000:
 
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m'))
 ax.set_xlim(start_date, end_date)
-ax.set_xticks(date_list[::2])
+ax.set_xticks(date_list[::tick_space])
 
 ax.set_ylim([0,y_limit])
 ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
@@ -93,8 +92,6 @@ ax.legend(loc='upper left',frameon=False, fontsize=20)
 ax.tick_params(axis='y',labelsize=15)
 ax.tick_params(axis='x',labelsize=13)
 
-plt.title("Roddy's COVID19 vaccine tracker",
-        fontsize=30, color='g' )
 plt.xlabel('Date',fontsize=20)
 plt.ylabel('Total vaccinations',fontsize=25)
 

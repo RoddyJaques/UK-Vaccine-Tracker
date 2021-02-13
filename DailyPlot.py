@@ -6,7 +6,7 @@ import matplotlib.ticker as tick
 import seaborn as sns
 import datetime
 from VaxTraxFunctions import y_fmt
-from GetData import by_date, date_list, number_of_days, end_datetime, start_date, end_date
+from GetData import by_date, date_list, number_of_days, end_datetime, start_date, end_date, tick_space
 
 #Get latest day only
 today = by_date[by_date["date_real"]==by_date["date_real"].max()]
@@ -15,9 +15,6 @@ today = by_date[by_date["date_real"]==by_date["date_real"].max()]
 today_n = int(today["vaxes"].iloc[0])
 vax_per_min = int(today_n/1440)
 wkavg_n = int(today["7day_avg"].iloc[0])
-
-#calculate number over past 7 days
-past_7days = by_date["vaxes"].iloc[-7:].sum()
 
 #Number of vaccinations per day needed for 2m/weeek, 3m/week and 4m/week
 target_2mpd = float(2000000/7)
@@ -59,7 +56,7 @@ ax.text(end_datetime-datetime.timedelta(days = 0.19*number_of_days),target_6mpd-
 
 ax.plot(by_date["date_real"],by_date["vaxes"],c="r", lw=5,label="_nolegend_")
 ax.plot(today["date_real"],today["vaxes"],"ro", ms=12,label="_nolegend_")
-ax.text(today["date_real"]+datetime.timedelta(days = 0.3),today["vaxes"]-20000,f'{int(today["vaxes"].iloc[0]):,}' + "\nvaccinations today", fontdict={"size":23})
+ax.text(today["datetime"]+datetime.timedelta(days = 0.013*number_of_days),today["vaxes"]-50000,f'{int(today["vaxes"].iloc[0]):,}' + "\nvaccinations today", fontdict={"size":23})
 
 ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=5, marker="X",ms=12)
 
@@ -67,7 +64,7 @@ ax.text(start_date,10000," @VaccinationsUK", fontdict={'size':30, 'color':'darkg
 
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m"))
 ax.set_xlim(start_date, end_date)
-ax.set_xticks(date_list[::2])
+ax.set_xticks(date_list[::tick_space])
 
 ax.set_ylim([0,900000])
 ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))

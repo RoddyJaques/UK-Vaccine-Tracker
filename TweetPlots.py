@@ -1,7 +1,7 @@
 import datetime
 import tweepy_auth
-from DailyPlot import today_n, wkavg_n, vax_per_min, past_7days
-from CumulativePlot import today_total, pop_pct
+from DailyPlot import today_n, wkavg_n, vax_per_min
+from CumulativePlot import today_total, pop_pct, past_7days
 from Projections import wkavg_15m, wkavg_o50, proj_file
 from VaxTraxFunctions import project_tl
 

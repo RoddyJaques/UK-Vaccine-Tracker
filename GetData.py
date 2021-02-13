@@ -21,13 +21,16 @@ endpoint = (
 #Only run once data has been updated
 response = get(endpoint, timeout=10)
 LastUpdated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y").date()
-while(LastUpdated < datetime.datetime.now().date()):
-    print("Data not yet updated")
-    time.sleep(120)
+Now = datetime.datetime.now()
+while(LastUpdated < Now.date()):
+    print("Data not updated as of " + Now.time().strftime("%H:%M") + ", last updated: " + response.headers['Last-Modified'])
+    time.sleep(60)
+    Now = datetime.datetime.now()
+    response = None
     response = get(endpoint, timeout=10)
-    LastUpdated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y")
+    LastUpdated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y").date()
 
-print("Data updated at " + response.headers['Last-Modified'])
+print("Data updated: " + response.headers['Last-Modified'])
 
 data = get_data(endpoint)
 df=pd.json_normalize(data,"data")
@@ -35,6 +38,7 @@ df=pd.json_normalize(data,"data")
 #Change date from index to datetime variable and sum 1st and 2nd doses for overall doses per day 
 by_date = df.groupby("date").sum().reset_index()
 by_date["date_real"] = pd.to_datetime(by_date["date"]).dt.date
+by_date["datetime"] = pd.to_datetime(by_date["date"])
 by_date["vaxes"] = by_date["newPeopleVaccinatedFirstDoseByPublishDate"] + by_date["newPeopleVaccinatedSecondDoseByPublishDate"]
 
 by_date["FirstDoseOnly"] = by_date["cumPeopleVaccinatedFirstDoseByPublishDate"] - by_date["cumPeopleVaccinatedSecondDoseByPublishDate"]
@@ -53,4 +57,6 @@ end_date = start_date + datetime.timedelta(days=28 + 14*AxisAdd)
 end_datetime = datetime.datetime.combine(end_date, datetime.datetime.min.time()) #Keep a datetime of the end date so annoations can be plotted precisely 
 number_of_days = (end_date - start_date).days + 1
 date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
+
+tick_space = round(number_of_days/23)
 
