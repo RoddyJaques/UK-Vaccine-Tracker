@@ -1,5 +1,5 @@
 # UK-Vaccine-Tracker
-*A python program which plots the daily number of COVID19 vaccinations in the UK and tweets the result.*
+*A python program which plots the daily number of COVID19 vaccinations in the UK and tweets the result from twitter.com/VaccinationsUK*
 
 GetData.py - Extracts data when it's uploaded to Gov.UK api
 
