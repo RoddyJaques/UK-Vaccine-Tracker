@@ -20,15 +20,15 @@ endpoint = (
 
 #Only run once data has been updated
 response = get(endpoint, timeout=10)
-LastUpdated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y").date()
-Now = datetime.datetime.now()
-while(LastUpdated < Now.date()):
+last_updated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y").date()
+now = datetime.datetime.now()
+while(last_updated < now.date()):
     print("Data not updated as of " + Now.time().strftime("%H:%M") + ", last updated: " + response.headers['Last-Modified'])
     time.sleep(60)
-    Now = datetime.datetime.now()
+    now = datetime.datetime.now()
     response = None
     response = get(endpoint, timeout=10)
-    LastUpdated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y").date()
+    last_updated = datetime.datetime.strptime(response.headers['Last-Modified'][5:16], "%d %b %Y").date()
 
 print("Data updated: " + response.headers['Last-Modified'])
 
@@ -52,8 +52,8 @@ start_date = datetime.date(2021, 1 , 11)
 
 #Extends x-axis by 2 weeks every 2 weeks
 diff = (datetime.date.today() - datetime.date(2021,1,30)).days
-AxisAdd = (diff/14) + 1
-end_date = start_date + datetime.timedelta(days=28 + 14*AxisAdd)
+axis_add = (diff/14) + 1
+end_date = start_date + datetime.timedelta(days=(28 + 14*axis_add))
 end_datetime = datetime.datetime.combine(end_date, datetime.datetime.min.time()) #Keep a datetime of the end date so annoations can be plotted precisely 
 number_of_days = (end_date - start_date).days + 1
 date_list = np.asarray([(start_date + datetime.timedelta(days = day)) for day in range(number_of_days)])
