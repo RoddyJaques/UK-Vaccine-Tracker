@@ -21,13 +21,17 @@ groups = [[1000000,"Care home residents + their carers"],[6500000,"over 80 + fro
 #Set y_limit based on number of vaccinations
 if today_total < 16800000: 
     y_limit = 25000000
-else:
+elif today_total < 34000000:
     y_limit = 35000000
+else:
+    y_limit = 53000000
 
-for i in range(len(groups)):
-    if today_total < groups[i][0]:
-        current_group = groups[i][1]
-        break
+#Find which group is currently being vaccinated
+""" for i in range(len(groups)):
+     if today_total < groups[i][0]:
+         current_group = groups[i][1]
+         break
+"""        
 
 #Plot cumulative vaccinations per day and reference lines
 fig, ax = plt.subplots(1,1,figsize=[20,11.25],facecolor="white")
@@ -79,6 +83,11 @@ if today_total > 16800000:
     ax.plot(date_list, np.full(date_list.shape,29700000),label='_nolegend_',lw=width,c='black')
     ax.text(shortlabel_x,30000000,
             "Over 50s", fontsize=20)
+
+if today_total > 34000000:
+    ax.plot(date_list, np.full(date_list.shape,53000000),label='_nolegend_',lw=width,c='black')
+    ax.text(shortlabel_x,30000000,
+            "All adults", fontsize=20)
 
 ax.xaxis.set_major_formatter(mdates.DateFormatter('%d/%m'))
 ax.set_xlim(start_date, end_date)

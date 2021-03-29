@@ -58,7 +58,8 @@ ax.plot(by_date["date_real"],by_date["vaxes"],c="r", lw=5,label="_nolegend_")
 ax.plot(today["date_real"],today["vaxes"],"ro", ms=12,label="_nolegend_")
 ax.text(today["datetime"]+datetime.timedelta(days = 0.013*number_of_days),today["vaxes"]-50000,f'{int(today["vaxes"].iloc[0]):,}' + "\nvaccinations today", fontdict={"size":23})
 
-ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=5, marker="X",ms=12)
+ax.plot(by_date["date_real"],by_date["7day_avg"],c="springgreen",lw=5,ms=12)
+ax.plot(today["date_real"],today["7day_avg"],marker="X",c="springgreen", ms=12,label="_nolegend_")
 
 ax.text(start_date,10000," @VaccinationsUK", fontdict={'size':30, 'color':'darkgrey'})
 
