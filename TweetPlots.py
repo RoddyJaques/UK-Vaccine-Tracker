@@ -2,6 +2,7 @@ import datetime
 import tweepy_auth
 from DailyPlot import today_n, wkavg_n, vax_per_min
 from CumulativePlot import today_total, pop_pct, past_7days
+from DoseBreakdown import today_first, today_second
 from VaxTraxFunctions import project_tl
 
 if __name__ == "__main__":
@@ -25,6 +26,15 @@ if __name__ == "__main__":
            + "\n\n\U0001F489 " + str(pop_pct) + "%" + " of adults in the UK have now recieved at least one dose.")    
     media2 = api.media_upload(cum_file_name+".png")
     tweet2 = api.update_status(status=cum_tweet, media_ids=[media2.media_id],in_reply_to_status_id=tweet1.id_str)
+
+    # Tweet dose breakdown
+    dosebd_file_name = "DoseBreakdown_" + datetime.datetime.today().strftime("%d%m%y")
+    #Get tweet text
+    dosebd_tweet = ("Today there were:" 
+            +"\n\n\U0001F489 " + today_first + " first doses given." 
+            +"\n\n\U0001F489 " + today_second + " second doses given." )
+    media3 = api.media_upload(dosebd_file_name+".png")
+    tweet3 = api.update_status(status=dosebd_tweet, media_ids=[media3.media_id],in_reply_to_status_id=tweet2.id_str)
 
     with open("tweet_id.txt","w") as tweet_id:
         tweet_id.write(tweet1.id_str)
