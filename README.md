@@ -9,6 +9,8 @@ DailyPlot.py - Plots daily vaccination numbers
 
 Projections.py - Estimates when priority groups will be vaccinated by and creates figures with estimates
 
+DoseBreakdown.py - Creates a graphic with the daily first and seconds doses given
+
 TweetPlots.py - Tweets figures created by CumulativePlot.py, DailyPlot.py and Projections.py in a thread
 
 RetweetThread.py - ReTweets the first tweet of the previously created thread 
